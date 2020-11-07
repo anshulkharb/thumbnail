@@ -2,8 +2,9 @@ import os, json
 from random import randint 
 
 
+
+
 def generate_thumbnail(input, output, options):
-    
     try:
         if os.path.isfile(input):
             pass
@@ -56,9 +57,9 @@ def generate_thumbnail(input, output, options):
         imgcommand = ''
         vidcommand = ''
     
-    print(options)
+    # print(options)
 
-    print(input_ext, output_ext)
+    # print(input_ext, output_ext)
     
     try:
         if output_ext in ['png', 'jpg', 'gif']:
@@ -69,7 +70,8 @@ def generate_thumbnail(input, output, options):
         print('Output extension is not supported.')
         return False
     
-    with open('mimedb.json') as json_file:
+    mimedb_path = os.path.dirname(os.path.realpath(__file__)) + '/mimedb.json'
+    with open(mimedb_path) as json_file:
         mimedb = json.load(json_file)
     # print(mimedb[0])
 
@@ -97,28 +99,19 @@ def generate_thumbnail(input, output, options):
         
     if filetype == 'video':
         command = 'ffmpeg -y -i '+input+' -vf thumbnail '+vidcommand+' -frames:v 1 '+output
-        print(command)
+        # print(command)
         os.system(command)
     elif filetype == 'image':
         command = 'convert '+options['trim']+' -quality '+options['quality']+' '+imgcommand+' -colorspace RGB '+input+'[0] '+output
         os.system(command)
     elif filetype == 'other':
 
-        tmppath = str(randint(1000, 9999)) + '.pdf'
+        tmppath = './' + str(randint(1000, 9999)) + '.pdf'
         command = 'unoconv -e PageRange=1 -o '+tmppath+' '+input
         os.system(command)
         command = 'convert '+options['trim']+' -quality '+options['quality']+' '+imgcommand+' -colorspace RGB '+tmppath+'[0] '+output
-        print(command)
+        # print(command)
         os.system(command)
         os.remove(tmppath)
         
     return True
-
-
-generate_thumbnail('file.doc', 'fb.png', {
-    'trim': True,
-    'quality': 25,
-    'height': 300,
-    'width': 200,
-    # 'type': 'firstpage'
-})
