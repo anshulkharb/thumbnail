@@ -54,7 +54,7 @@ options = {
 	'quality': 85,
 	'type': 'thumbnail'
 }
-generate_thumbnil('sample.docx', './thumbnails/thumbnail.png', options)
+generate_thumbnail('sample.docx', './thumbnails/thumbnail.png', options)
 ```
   
     
