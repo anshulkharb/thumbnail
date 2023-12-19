@@ -6491,7 +6491,7 @@
   },
   "video/x-m4v": {
     "source": "apache",
-    "extensions": ["m4v"]
+    "extensions": ["m4v","x-m4v"]
   },
   "video/x-matroska": {
     "source": "apache",
